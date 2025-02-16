@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Movie - MovieWeb App</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="page-title">Add Movie</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+      <form
+        action="{{ url_for('add_movie', user_id=user_id) }}"
+        method="POST"
+        class="form"
+      >
+        <div class="form-group">
+          <label for="movie">Movie Name:</label>
+          <input
+            type="text"
+            id="movie"
+            name="movie"
+            required
+            placeholder="Enter movie title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="year">Year (optional):</label>
+          <input
+            type="number"
+            id="year"
+            name="year"
+            placeholder="e.g. 1972"
+            min="1900"
+            max="2024"
+          />
+        </div>
+        <input type="hidden" name="user_id" value="{{ user_id }}" />
+        <button type="submit" class="btn">Search & Add Movie</button>
+      </form>
+
+      <div class="note">
+        <p>Movie details will be automatically fetched from OMDB database.</p>
+        <p>
+          If the movie is not found, you'll be prompted to enter details
+          manually.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- shallow vs deep copy - python say what what i did in each company, projects,
+ways i do to learn, it was interestingbc of this etc. more relaxed share the
+though process -->

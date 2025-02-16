@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies - MovieWeb App</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+      <h1 class="page-title">{{ user.username }}'s Movies</h1>
+      <div class="action-buttons">
+        <a href="{{ url_for('add_movie_page', user_id=user.id) }}" class="btn"
+          >Add New Movie</a
+        >
+      </div>
+      <ul class="user-list">
+        {% for movie in movies %}
+        <li class="user-item">
+          <div class="card">
+            <h3>{{ movie.title }}</h3>
+            <p>Director: {{ movie.director }}</p>
+            <p>Year: {{ movie.year }}</p>
+            <p>Rating: {{ movie.rating }}</p>
+            <div class="card-actions">
+              <a
+                href="{{ url_for('update_movie_page', user_id=user.id, movie_id=movie.id) }}"
+                class="btn btn-secondary"
+                >Edit</a
+              >
+              <a
+                href="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}"
+                class="btn btn-danger"
+                onclick="return confirm('Are you sure you want to delete this movie?')"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="bottom-actions">
+        <a href="{{ url_for('list_users') }}" class="btn">Back to Users</a>
+      </div>
+    </div>
+  </body>
+</html>
