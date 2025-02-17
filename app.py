@@ -18,6 +18,7 @@ print(f"Database exists: {os.path.exists(os.path.join(instance_path, 'moviwebapp
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 if not app.secret_key:
     raise ValueError("No secret key set for Flask application. Set FLASK_SECRET_KEY environment variable.")
+
 db.init_app(app)
 data_manager = SQLiteDataManager(app) 
 
@@ -50,7 +51,8 @@ def fetch_movie_details(title, year=None):
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    users = data_manager.get_all_users()
+    return render_template('users.html', users=users)
 
 @app.route('/users')
 def list_users():
@@ -178,6 +180,10 @@ def update_movie_page(user_id, movie_id):
         return redirect(url_for('user_movies', user_id=user_id))
     
     return render_template('update_movie.html', user_id=user_id, movie=movie)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['POST'])
 def update_movie_post(user_id, movie_id):
