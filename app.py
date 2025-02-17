@@ -13,8 +13,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 instance_path = os.path.join(basedir, 'instance')
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(instance_path, "moviwebapp.db")}'
-print(f"Database path: {os.path.join(instance_path, 'moviwebapp.db')}")
-print(f"Database exists: {os.path.exists(os.path.join(instance_path, 'moviwebapp.db'))}")
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 if not app.secret_key:
     raise ValueError("No secret key set for Flask application. Set FLASK_SECRET_KEY environment variable.")
