@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(instance_path,
 db.init_app(app)
 
 with app.app_context():
-    # This will create the database and all tables
     db.create_all()
     
     # Create sample users
@@ -47,10 +46,8 @@ with app.app_context():
     # Commit all changes
     db.session.commit()
 
-    # Create relationships (users liking movies)
-    users[0].movies.extend([movies[0], movies[1]])  # john_doe likes first two movies
-    users[1].movies.append(movies[0])  # jane_smith likes first movie
-    users[2].movies.extend([movies[1], movies[2]])  # bob_wilson likes second and third movies
+    users[0].movies.extend([movies[0], movies[1]]) 
+    users[1].movies.append(movies[0])
+    users[2].movies.extend([movies[1], movies[2]]) 
 
-    # Commit the relationships
     db.session.commit() 
